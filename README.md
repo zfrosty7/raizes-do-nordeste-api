@@ -9,7 +9,7 @@ API REST em **Java 21 + Spring Boot 3**: pedidos em vários canais, estoque por 
 
 | Item | Endereço |
 |---|---|
-| Repositório | https://github.com/zfrosty7/raizes-do-nordeste-api..git |
+| Repositório | https://github.com/zfrosty7/raizes-do-nordeste-api.git |
 | Swagger (local) | http://localhost:8080/swagger-ui.html |
 | Coleção Postman | `postman/raizes-do-nordeste.postman_collection.json` |
 | DER | `docs/diagramas/der.png` |
