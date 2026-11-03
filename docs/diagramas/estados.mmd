@@ -1,0 +1,14 @@
+stateDiagram-v2
+    [*] --> AGUARDANDO_PAGAMENTO : criar pedido
+    AGUARDANDO_PAGAMENTO --> PAGO : pagamento aprovado
+    AGUARDANDO_PAGAMENTO --> PAGAMENTO_RECUSADO : pagamento recusado
+    PAGAMENTO_RECUSADO --> PAGO : nova tentativa aprovada
+    AGUARDANDO_PAGAMENTO --> CANCELADO : cancelar
+    PAGAMENTO_RECUSADO --> CANCELADO : cancelar
+    PAGO --> EM_PREPARO : gerente atualiza
+    PAGO --> CANCELADO : cancelar
+    EM_PREPARO --> PRONTO : pedido pronto
+    EM_PREPARO --> CANCELADO : cancelar
+    PRONTO --> ENTREGUE : entrega
+    ENTREGUE --> [*]
+    CANCELADO --> [*]

@@ -1,0 +1,28 @@
+sequenceDiagram
+    actor C as Cliente
+    participant API as API (Controller)
+    participant S as Service
+    participant DB as Banco de dados
+    participant M as Pagamento Mock
+    actor G as Gerente
+
+    C->>API: POST /pedidos (token, canalPedido, itens)
+    API->>API: confere o token e o perfil
+    API->>S: criar pedido
+    S->>DB: busca produtos e confere o estoque
+    alt estoque insuficiente
+        S-->>C: 409 ESTOQUE_INSUFICIENTE
+    else tem estoque
+        S->>DB: baixa estoque e salva o pedido
+        S-->>C: 201 AGUARDANDO_PAGAMENTO
+    end
+    C->>API: POST /pedidos/{id}/pagamentos
+    API->>S: pagar
+    S->>M: processar pagamento
+    M-->>S: APROVADO ou RECUSADO
+    S->>DB: salva pagamento e atualiza status do pedido
+    S-->>C: 201 (resultado do pagamento e status do pedido)
+    G->>API: PATCH /pedidos/{id}/status (EM_PREPARO)
+    API->>S: atualizar status
+    S->>DB: confere a mudanca permitida e salva
+    S-->>G: 200 pedido atualizado

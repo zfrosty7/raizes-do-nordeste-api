@@ -1,0 +1,55 @@
+erDiagram
+    UNIDADE ||--o{ PRODUTO : "tem no cardapio"
+    UNIDADE ||--o{ PEDIDO : "recebe"
+    USUARIO ||--o{ PEDIDO : "faz"
+    PEDIDO ||--|{ ITEM_PEDIDO : "contem"
+    PRODUTO ||--o{ ITEM_PEDIDO : "e vendido em"
+    PEDIDO ||--o{ PAGAMENTO : "e pago por"
+
+    USUARIO {
+        bigint id PK
+        varchar nome
+        varchar email
+        varchar senha_hash
+        varchar perfil
+        boolean consentimento_lgpd
+        timestamp consentimento_em
+    }
+    UNIDADE {
+        bigint id PK
+        varchar nome
+        varchar cidade
+    }
+    PRODUTO {
+        bigint id PK
+        varchar nome
+        decimal preco
+        int quantidade
+        bigint unidade_id FK
+    }
+    PEDIDO {
+        bigint id PK
+        bigint cliente_id FK
+        bigint unidade_id FK
+        varchar canal_pedido
+        varchar status
+        varchar forma_pagamento
+        decimal total
+        timestamp criado_em
+    }
+    ITEM_PEDIDO {
+        bigint id PK
+        bigint pedido_id FK
+        bigint produto_id FK
+        int quantidade
+        decimal preco_unitario
+    }
+    PAGAMENTO {
+        bigint id PK
+        bigint pedido_id FK
+        varchar forma_pagamento
+        varchar status
+        decimal valor
+        varchar referencia
+        timestamp criado_em
+    }
